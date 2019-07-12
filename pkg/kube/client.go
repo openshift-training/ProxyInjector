@@ -11,7 +11,6 @@ import (
 // GetClient gets the client for k8s, if ~/.kube/config exists get that, else get the in-cluster config
 func GetClient() (*kubernetes.Clientset, error) {
 	var config *rest.Config
-	var err error
 	kubeconfigPath := os.Getenv("KUBECONFIG")
 	if kubeconfigPath == "" {
 		kubeconfigPath = os.Getenv("HOME") + "/.kube/config"
@@ -27,9 +26,6 @@ func GetClient() (*kubernetes.Clientset, error) {
 		if err != nil {
 			return nil, err
 		}
-	}
-	if err != nil {
-		return nil, err
 	}
 	return kubernetes.NewForConfig(config)
 }

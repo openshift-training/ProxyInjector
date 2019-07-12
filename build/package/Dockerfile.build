@@ -1,17 +1,17 @@
-FROM stakater/go-glide:1.9.3
+FROM alpine
 MAINTAINER "Stakater Team"
 
 RUN apk update
 
 RUN apk -v --update \
-    add git build-base && \
+    add git build-base go && \
     rm -rf /var/cache/apk/* && \
     mkdir -p "$GOPATH/src/github.com/stakater/ProxyInjector"
 
 ADD . "$GOPATH/src/github.com/stakater/ProxyInjector"
 
 RUN cd "$GOPATH/src/github.com/stakater/ProxyInjector" && \
-    glide update
+    go mod tidy
 
 RUN  cd "$GOPATH/src/github.com/stakater/ProxyInjector" && \
      CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a --installsuffix cgo --ldflags="-s" -o /ProxyInjector

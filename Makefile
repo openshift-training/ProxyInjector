@@ -4,23 +4,22 @@
 
 BUILDER ?= proxyinjector-builder
 BINARY ?= ProxyInjector
-DOCKER_IMAGE ?= stakater/proxyinjector
+DOCKER_IMAGE ?= openshifttraining/proxyinjector
 # Default value "dev"
-DOCKER_TAG ?= 0.0.1
+DOCKER_TAG ?= v0.0.19
 REPOSITORY = ${DOCKER_IMAGE}:${DOCKER_TAG}
 
 VERSION=$(shell cat .version)
 BUILD=
 
 GOCMD = go
-GLIDECMD = glide
 GOFLAGS ?= $(GOFLAGS:)
 LDFLAGS =
 
 default: build test
 
 install:
-	"$(GLIDECMD)" install
+	"$(GOCMD)" install
 
 build:
 	"$(GOCMD)" build ${GOFLAGS} ${LDFLAGS} -o "${BINARY}"
@@ -50,3 +49,5 @@ apply:
 	kubectl apply -f deployments/manifests/ -n temp-proxyinjector
 
 deploy: binary-image push apply
+
+publish: binary-image push

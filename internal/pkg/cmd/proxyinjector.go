@@ -35,10 +35,10 @@ func startProxyInjector(cmd *cobra.Command, args []string) {
 		logrus.Fatal(err)
 	}
 
-	config := config.GetControllerConfig()
+	cfg := config.GetControllerConfig()
 
 	for resource := range kube.ResourceMap {
-		c, err := controller.NewController(clientset, resource, config, currentNamespace)
+		c, err := controller.NewController(clientset, resource, cfg, currentNamespace)
 		if err != nil {
 			logrus.Fatalf("%s", err)
 		}

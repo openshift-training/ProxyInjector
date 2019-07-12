@@ -1,20 +1,19 @@
 package callbacks
 
 import (
-	apps "k8s.io/api/apps/v1beta2"
-	ext "k8s.io/api/extensions/v1beta1"
+	apps "k8s.io/api/apps/v1"
 )
 
 func GetDeploymentAnnotations(resource interface{}) map[string]string {
-	return resource.(*ext.Deployment).GetAnnotations()
+	return resource.(*apps.Deployment).GetAnnotations()
 }
 
 func GetDeploymentName(resource interface{}) string {
-	return resource.(*ext.Deployment).Name
+	return resource.(*apps.Deployment).Name
 }
 
 func GetDeploymentNamespace(resource interface{}) string {
-	return resource.(*ext.Deployment).Namespace
+	return resource.(*apps.Deployment).Namespace
 }
 
 func GetDaemonsetAnnotations(resource interface{}) map[string]string {
